@@ -1,1 +1,1827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Ramadhan Portal | Kalkulator Zakat</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        /* Light Mode Variables */
+        .light-mode {
+            --primary: #0a5c4e;
+            --primary-dark: #064236;
+            --primary-light: #1b7b6a;
+            --gold: #c9a13b;
+            --gold-light: #e5c36b;
+            --gold-dark: #a77f2a;
+            --bg-gradient: linear-gradient(135deg, #fcf9f2 0%, #f5ede1 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #0a5c4e;
+            --text-secondary: #8b7356;
+            --border-color: rgba(201, 161, 59, 0.3);
+            --shadow: 0 5px 20px rgba(10, 92, 78, 0.15);
+            --navbar-bg: rgba(10, 59, 46, 0.95);
+            --navbar-text: #faf0e1;
+        }
+
+        /* Dark Mode Variables */
+        .dark-mode {
+            --primary: #1a2c2e;
+            --primary-dark: #0f1e20;
+            --primary-light: #2a3f42;
+            --gold: #d4af37;
+            --gold-light: #e5c36b;
+            --gold-dark: #b8860b;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --text-primary: #e5c36b;
+            --text-secondary: #a8a8b8;
+            --border-color: rgba(212, 175, 55, 0.3);
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            --navbar-bg: rgba(10, 30, 20, 0.95);
+            --navbar-text: #ffffff;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--gold);
+            padding: 0.5rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .navbar-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .navbar {
+                padding: 0.8rem 2rem;
+            }
+            .navbar-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .logo a {
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .logo a {
+                font-size: 1.8rem;
+            }
+        }
+
+        .logo a:hover {
+            transform: scale(1.05);
+        }
+
+        .logo a span {
+            color: var(--navbar-text);
+        }
+
+        .logo i {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-menu {
+                gap: 0.5rem;
+            }
+        }
+
+        .nav-link {
+            color: var(--navbar-text);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid transparent;
+        }
+
+        @media (min-width: 768px) {
+            .nav-link {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.95rem;
+                gap: 6px;
+            }
+        }
+
+        .nav-link i {
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-link i {
+                font-size: 1rem;
+            }
+        }
+
+        .nav-link:hover {
+            background: var(--gold);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(212, 167, 44, 0.3);
+        }
+
+        .nav-link.active {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--navbar-text);
+            box-shadow: 0 4px 10px rgba(212, 167, 44, 0.3);
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 10px;
+            z-index: 1000;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gold);
+            border-radius: 40px;
+            padding: 3px;
+            display: flex;
+            gap: 3px;
+            box-shadow: var(--shadow);
+        }
+
+        @media (min-width: 768px) {
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        .theme-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .theme-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .theme-btn.active {
+            background: var(--gold);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Canvas untuk Partikel */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating Ornaments */
+        .ornament {
+            position: absolute;
+            font-size: 20px;
+            color: var(--gold);
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+
+        @media (min-width: 768px) {
+            .ornament {
+                font-size: 30px;
+            }
+        }
+
+        .ornament-1 { top: 5%; left: 5%; animation: float3D 20s ease-in-out infinite; }
+        .ornament-2 { top: 10%; right: 5%; animation: float3D 18s ease-in-out infinite reverse; }
+        .ornament-3 { bottom: 10%; left: 5%; animation: float3D 22s ease-in-out infinite; }
+        .ornament-4 { bottom: 15%; right: 5%; animation: float3D 16s ease-in-out infinite reverse; }
+
+        @keyframes float3D {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0.1;
+            }
+            50% { 
+                transform: translate(10px, -10px) rotate(5deg) scale(1.1);
+                opacity: 0.15;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gold);
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            animation: spin3D 1.2s infinite;
+            box-shadow: 0 0 30px var(--gold);
+        }
+
+        @media (min-width: 768px) {
+            .loading-spinner {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @keyframes spin3D {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Main Container */
+        .zakat-container {
+            max-width: 1300px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 15px 15px;
+        }
+
+        @media (min-width: 768px) {
+            .zakat-container {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                margin-bottom: 30px;
+            }
+        }
+
+        .header-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            opacity: 0.1;
+            filter: blur(30px);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .header-glow {
+                width: 200px;
+                height: 200px;
+                filter: blur(40px);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 20px var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .badge {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+            }
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: badgeShine 3s linear infinite;
+        }
+
+        @keyframes badgeShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 0 rgba(201, 161, 59, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 3rem;
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .header h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        .header h1 span {
+            color: var(--gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+            border-radius: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .header h1 span::after {
+                height: 4px;
+            }
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        @media (min-width: 768px) {
+            .header p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* Calculator Grid */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                gap: 20px;
+                margin-top: 20px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .calculator-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 30px;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .card {
+                border-radius: 24px;
+                padding: 25px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .card {
+                padding: 30px;
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--gold);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: rotate3D 20s linear infinite;
+        }
+
+        @keyframes rotate3D {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .card-header {
+                margin-bottom: 20px;
+            }
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .card-title {
+                gap: 10px;
+            }
+        }
+
+        .card-title i {
+            color: var(--gold);
+            font-size: 1.2rem;
+            background: var(--card-bg);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        @media (min-width: 768px) {
+            .card-title i {
+                font-size: 1.5rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .card-title h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        @media (min-width: 768px) {
+            .card-title h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Zakat Type Selector */
+        .type-selector {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+            flex-wrap: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .type-selector {
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 8px 6px;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .type-btn {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+                gap: 6px;
+            }
+        }
+
+        .type-btn i {
+            color: var(--gold);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .type-btn i {
+                font-size: 1rem;
+            }
+        }
+
+        .type-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .type-btn.active i {
+            color: var(--gold-light);
+        }
+
+        /* Input Group */
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .input-group {
+                margin-bottom: 15px;
+            }
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .input-group label {
+                margin-bottom: 6px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .input-group label i {
+            color: var(--gold);
+            margin-right: 4px;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .input-group label i {
+                margin-right: 6px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .input-wrapper i {
+                left: 12px;
+                font-size: 1rem;
+            }
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            border: 2px solid var(--border-color);
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @media (min-width: 768px) {
+            .input-field {
+                padding: 12px 12px 12px 40px;
+                font-size: 0.95rem;
+            }
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 161, 59, 0.1);
+        }
+
+        .currency-badge {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold);
+            padding: 3px 8px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.7rem;
+            border: 2px solid var(--gold-light);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .currency-badge {
+                right: 12px;
+                padding: 4px 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Info Card */
+        .info-card {
+            background: linear-gradient(135deg, rgba(201, 161, 59, 0.1), transparent);
+            border-radius: 16px;
+            padding: 12px;
+            margin: 12px 0;
+            border: 2px dashed var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .info-card {
+                border-radius: 20px;
+                padding: 15px;
+                margin: 15px 0;
+                gap: 10px;
+            }
+        }
+
+        .info-card i {
+            color: var(--gold);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .info-card i {
+                font-size: 1.2rem;
+            }
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        @media (min-width: 768px) {
+            .info-card p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* Calculate Button */
+        .calculate-btn {
+            width: 100%;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.2);
+            margin-top: 8px;
+            box-shadow: 0 5px 15px var(--gold);
+        }
+
+        @media (min-width: 768px) {
+            .calculate-btn {
+                padding: 14px 20px;
+                font-size: 1.1rem;
+                gap: 8px;
+                margin-top: 10px;
+            }
+        }
+
+        .calculate-btn i {
+            font-size: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculate-btn i {
+                font-size: 1.1rem;
+            }
+        }
+
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px var(--gold);
+        }
+
+        /* Result Section */
+        .result-section {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 16px;
+            padding: 15px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .result-section {
+                border-radius: 20px;
+                padding: 20px;
+            }
+        }
+
+        .result-section::before {
+            content: '﷽';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            font-size: 50px;
+            font-family: 'Playfair Display', serif;
+            opacity: 0.1;
+            color: var(--gold);
+            transform: rotate(-15deg);
+        }
+
+        @media (min-width: 768px) {
+            .result-section::before {
+                font-size: 80px;
+            }
+        }
+
+        .result-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .result-grid {
+                gap: 10px;
+            }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .result-item {
+                padding: 10px 0;
+            }
+        }
+
+        .result-item:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,0.05);
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 30px;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        @media (min-width: 768px) {
+            .result-label {
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+        }
+
+        .result-label i {
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .result-label i {
+                font-size: 1rem;
+            }
+        }
+
+        .result-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gold-light);
+        }
+
+        @media (min-width: 768px) {
+            .result-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Nisab Info */
+        .nisab-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 0;
+            border: 2px solid rgba(201, 161, 59, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .nisab-info {
+                border-radius: 16px;
+                padding: 15px;
+                margin: 15px 0;
+            }
+        }
+
+        .nisab-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 4px 0;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .nisab-row {
+                margin: 6px 0;
+                font-size: 0.9rem;
+            }
+        }
+
+        .nisab-row span:last-child {
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        /* Status Badge */
+        .status-container {
+            margin: 12px 0;
+        }
+
+        @media (min-width: 768px) {
+            .status-container {
+                margin: 15px 0;
+            }
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .status-badge {
+                padding: 12px 20px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .status-badge i {
+            margin-right: 6px;
+        }
+
+        .status-wajib {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .status-tidak {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        /* Zakat Amount */
+        .zakat-amount {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 40px;
+            padding: 15px;
+            text-align: center;
+            margin: 12px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .zakat-amount {
+                padding: 20px;
+                margin: 15px 0;
+            }
+        }
+
+        .zakat-amount .label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .zakat-amount .label {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+        }
+
+        .zakat-amount .amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            .zakat-amount .amount {
+                font-size: 2rem;
+            }
+        }
+
+        /* Footer Note */
+        .footer-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 12px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        @media (min-width: 768px) {
+            .footer-note {
+                gap: 6px;
+                margin-top: 15px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .footer-note i {
+            color: var(--gold);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding: 15px;
+            text-align: center;
+            border-top: 2px solid var(--border-color);
+        }
+
+        @media (min-width: 768px) {
+            .footer {
+                margin-top: 40px;
+                padding: 20px;
+            }
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                gap: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .footer-content i {
+            color: var(--gold);
+        }
+
+        /* Responsive Breakpoints */
+        @media screen and (max-width: 380px) {
+            .nav-link {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+            
+            .type-btn {
+                font-size: 0.7rem;
+                padding: 6px 4px;
+            }
+            
+            .result-value {
+                font-size: 0.8rem;
+            }
+            
+            .zakat-amount .amount {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) and (min-width: 381px) {
+            .nav-link {
+                padding: 0.35rem 0.7rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media screen and (min-width: 992px) and (max-width: 1200px) {
+            .calculator-grid {
+                gap: 25px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- NAVBAR - Navigation Menu -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-mosque"></i> Ramadhan<span>Portal</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span class="nav-text">Home</span></a>
+                <a href="jadwal.html" class="nav-link"><i class="fas fa-calendar-alt"></i> <span class="nav-text">Jadwal</span></a>
+                <a href="sahur-buka.html" class="nav-link"><i class="fas fa-utensils"></i> <span class="nav-text">Sahur & Buka</span></a>
+                <a href="dzikir-counter.html" class="nav-link"><i class="fas fa-counter"></i> <span class="nav-text">Dzikir</span></a>
+                <a href="zakat.html" class="nav-link active"><i class="fas fa-calculator"></i> <span class="nav-text">Zakat</span></a>
+                <a href="checklist.html" class="nav-link"><i class="fas fa-check-double"></i> <span class="nav-text">Checklist</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-btn active" id="lightModeBtn" onclick="setTheme('light')">
+            <i class="fas fa-sun"></i>
+        </button>
+        <button class="theme-btn" id="darkModeBtn" onclick="setTheme('dark')">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Canvas untuk Partikel -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Loading Animation -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Floating Ornaments -->
+    <div class="ornament ornament-1">✧</div>
+    <div class="ornament ornament-2">۞</div>
+    <div class="ornament ornament-3">☪</div>
+    <div class="ornament ornament-4">✨</div>
+
+    <!-- Main Container -->
+    <div class="zakat-container" id="zakatContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-glow"></div>
+            <div class="badge">
+                <i class="fas fa-mosque"></i> 
+                <span>#ZAKATMENGUATKANINDONESIA</span>
+            </div>
+            <h1>
+                Kalkulator <span>Zakat</span>
+            </h1>
+            <p>Hitung zakat penghasilan dan zakat emas dengan mudah, cepat, dan akurat sesuai syariah</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="calculator-grid">
+                <!-- Form Section -->
+                <div class="card" id="formCard">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-calculator"></i>
+                            <h2>Form Perhitungan</h2>
+                        </div>
+                    </div>
+
+                    <!-- Zakat Type Selector -->
+                    <div class="type-selector">
+                        <button class="type-btn active" id="btnPenghasilan">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Zakat Penghasilan</span>
+                        </button>
+                        <button class="type-btn" id="btnEmas">
+                            <i class="fas fa-coins"></i>
+                            <span>Zakat Emas</span>
+                        </button>
+                    </div>
+
+                    <!-- Form Penghasilan -->
+                    <div id="formPenghasilan" class="form-active">
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-money-bill-wave"></i>
+                                Gaji per Bulan
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-money-bill"></i>
+                                <input type="number" id="gaji" class="input-field" placeholder="0" min="0" value="5000000">
+                                <span class="currency-badge">Rp</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-coins"></i>
+                                Penghasilan Lain
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-coins"></i>
+                                <input type="number" id="penghasilanLain" class="input-field" placeholder="0" min="0" value="1000000">
+                                <span class="currency-badge">Rp</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Emas -->
+                    <div id="formEmas" style="display: none;">
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-weight-hanging"></i>
+                                Jumlah Emas (gram)
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-weight-hanging"></i>
+                                <input type="number" id="jumlahEmas" class="input-field" placeholder="0" min="0" value="100" step="0.1">
+                                <span class="currency-badge">gr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Harga Emas -->
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-gem"></i>
+                            Harga Emas per Gram
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-gem"></i>
+                            <input type="number" id="hargaEmas" class="input-field" placeholder="0" min="0" value="1078000" step="1000">
+                            <span class="currency-badge">Rp</span>
+                        </div>
+                    </div>
+
+                    <!-- Info Card -->
+                    <div class="info-card">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Nisab zakat adalah 85 gram emas. Jika total harta mencapai atau melebihi nisab, maka wajib zakat 2.5%.</p>
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <button class="calculate-btn" id="hitungBtn">
+                        <i class="fas fa-calculator"></i>
+                        Hitung Zakat
+                    </button>
+                </div>
+
+                <!-- Result Section -->
+                <div class="card" id="resultCard">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-chart-pie"></i>
+                            <h2>Hasil Perhitungan</h2>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <div class="result-grid">
+                            <div class="result-item">
+                                <span class="result-label">
+                                    <i class="fas fa-layer-group"></i>
+                                    Total Harta
+                                </span>
+                                <span class="result-value" id="totalHarta">Rp 6.000.000</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="result-label">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Nilai Nisab
+                                </span>
+                                <span class="result-value" id="nilaiNisab">Rp 91.630.000</span>
+                            </div>
+                        </div>
+
+                        <div class="nisab-info">
+                            <div class="nisab-row">
+                                <span>Nisab (85g):</span>
+                                <span id="nisabGram">85 gram</span>
+                            </div>
+                            <div class="nisab-row">
+                                <span>Harga/gram:</span>
+                                <span id="hargaEmasDisplay">Rp 1.078.000</span>
+                            </div>
+                        </div>
+
+                        <div id="statusContainer" class="status-container">
+                            <!-- Status akan diisi JS -->
+                        </div>
+
+                        <div class="zakat-amount" id="zakatAmount">
+                            <div class="label">Zakat yang Harus Dibayar</div>
+                            <div class="amount" id="jumlahZakat">Rp 0</div>
+                        </div>
+
+                        <div class="footer-note">
+                            <i class="fas fa-clock"></i>
+                            <span>Nisab 85g emas • 2.5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <i class="fas fa-mosque"></i>
+                <p>© 1446 H / 2025 M - Kalkulator Zakat Premium BAZNAS</p>
+                <i class="fas fa-star"></i>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.color = `rgba(201, 161, 59, ${Math.random() * 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = window.innerWidth < 768 ? 50 : 100;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+
+        // Theme Toggle Function
+        function setTheme(theme) {
+            const body = document.body;
+            const lightBtn = document.getElementById('lightModeBtn');
+            const darkBtn = document.getElementById('darkModeBtn');
+            
+            if (theme === 'light') {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                
+                anime({
+                    targets: body,
+                    backgroundColor: ['#1a1a2e', '#fcf9f2'],
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                });
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                
+                anime({
+                    targets: body,
+                    backgroundColor: ['#fcf9f2', '#1a1a2e'],
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                });
+            }
+            
+            // Animate all cards
+            anime({
+                targets: '.card',
+                scale: [0.98, 1],
+                opacity: [0.8, 1],
+                duration: 800,
+                easing: 'easeOutElastic'
+            });
+        }
+
+        // Remove loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                anime({
+                    targets: '#loading',
+                    opacity: 0,
+                    duration: 800,
+                    easing: 'easeOutQuad',
+                    complete: () => {
+                        document.getElementById('loading').style.display = 'none';
+                    }
+                });
+            }, 1500);
+        });
+
+        // Main animations and logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main container animation
+            anime({
+                targets: '.zakat-container',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                scale: [0.98, 1],
+                duration: 1000,
+                easing: 'easeOutElastic'
+            });
+
+            // Header animations
+            anime({
+                targets: '.badge',
+                scale: [0, 1],
+                rotate: ['-10deg', '0deg'],
+                duration: 800,
+                delay: 300,
+                easing: 'easeOutElastic'
+            });
+
+            anime({
+                targets: '.header h1',
+                translateY: [-20, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: 500,
+                easing: 'easeOutQuad'
+            });
+
+            anime({
+                targets: '.header p',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: 700,
+                easing: 'easeOutQuad'
+            });
+
+            // Card animations
+            anime({
+                targets: '#formCard',
+                translateX: [-20, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: 900,
+                easing: 'easeOutQuad'
+            });
+
+            anime({
+                targets: '#resultCard',
+                translateX: [20, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: 1100,
+                easing: 'easeOutQuad'
+            });
+
+            // Button animations
+            anime({
+                targets: '.type-btn',
+                scale: [0, 1],
+                rotate: ['-5deg', '0deg'],
+                duration: 600,
+                delay: anime.stagger(100, {start: 1300}),
+                easing: 'easeOutElastic'
+            });
+
+            // Constants
+            const NISAB_GRAM = 85;
+            
+            // DOM Elements
+            const btnPenghasilan = document.getElementById('btnPenghasilan');
+            const btnEmas = document.getElementById('btnEmas');
+            const formPenghasilan = document.getElementById('formPenghasilan');
+            const formEmas = document.getElementById('formEmas');
+            const hitungBtn = document.getElementById('hitungBtn');
+            
+            const gaji = document.getElementById('gaji');
+            const penghasilanLain = document.getElementById('penghasilanLain');
+            const jumlahEmas = document.getElementById('jumlahEmas');
+            const hargaEmas = document.getElementById('hargaEmas');
+            
+            const totalHartaEl = document.getElementById('totalHarta');
+            const nilaiNisabEl = document.getElementById('nilaiNisab');
+            const nisabGram = document.getElementById('nisabGram');
+            const hargaEmasDisplay = document.getElementById('hargaEmasDisplay');
+            const statusContainer = document.getElementById('statusContainer');
+            const jumlahZakatEl = document.getElementById('jumlahZakat');
+            const zakatAmount = document.getElementById('zakatAmount');
+
+            // Format Rupiah
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(angka).replace('Rp', 'Rp ');
+            }
+
+            // Toggle Form
+            function toggleForm(jenis) {
+                if (jenis === 'penghasilan') {
+                    formPenghasilan.style.display = 'block';
+                    formEmas.style.display = 'none';
+                    btnPenghasilan.classList.add('active');
+                    btnEmas.classList.remove('active');
+                } else {
+                    formPenghasilan.style.display = 'none';
+                    formEmas.style.display = 'block';
+                    btnEmas.classList.add('active');
+                    btnPenghasilan.classList.remove('active');
+                }
+            }
+
+            // Hitung Zakat
+            function hitungZakat() {
+                const hargaPerGram = parseFloat(hargaEmas.value) || 0;
+                const nisab = hargaPerGram * NISAB_GRAM;
+                
+                let total = 0;
+                
+                if (formPenghasilan.style.display !== 'none') {
+                    const gajiValue = parseFloat(gaji.value) || 0;
+                    const lainValue = parseFloat(penghasilanLain.value) || 0;
+                    total = gajiValue + lainValue;
+                } else {
+                    const emasValue = parseFloat(jumlahEmas.value) || 0;
+                    total = emasValue * hargaPerGram;
+                }
+
+                // Update display with animation
+                anime({
+                    targets: totalHartaEl,
+                    scale: [1, 1.1, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad',
+                    complete: () => {
+                        totalHartaEl.textContent = formatRupiah(total);
+                    }
+                });
+
+                anime({
+                    targets: nilaiNisabEl,
+                    scale: [1, 1.1, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad',
+                    complete: () => {
+                        nilaiNisabEl.textContent = formatRupiah(nisab);
+                    }
+                });
+
+                nisabGram.textContent = NISAB_GRAM + ' gram';
+                hargaEmasDisplay.textContent = formatRupiah(hargaPerGram);
+
+                // Cek status
+                const isWajib = total >= nisab;
+                const zakat = isWajib ? total * 0.025 : 0;
+
+                // Create status badge
+                let statusHtml = '';
+                if (isWajib) {
+                    statusHtml = `
+                        <div class="status-badge status-wajib">
+                            <i class="fas fa-check-circle"></i> WAJIB ZAKAT
+                        </div>
+                    `;
+                } else {
+                    statusHtml = `
+                        <div class="status-badge status-tidak">
+                            <i class="fas fa-times-circle"></i> TIDAK WAJIB ZAKAT
+                        </div>
+                    `;
+                }
+                statusContainer.innerHTML = statusHtml;
+
+                // Animate status badge
+                anime({
+                    targets: '.status-badge',
+                    scale: [0, 1],
+                    rotate: ['-10deg', '0deg'],
+                    duration: 500,
+                    easing: 'easeOutElastic'
+                });
+
+                // Update zakat amount
+                jumlahZakatEl.textContent = formatRupiah(zakat);
+                
+                anime({
+                    targets: zakatAmount,
+                    scale: [1, 1.05, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+
+                // Animate result items
+                anime({
+                    targets: '.result-item',
+                    translateX: ['-10px', '0px'],
+                    opacity: [0.5, 1],
+                    duration: 400,
+                    delay: anime.stagger(50),
+                    easing: 'easeOutQuad'
+                });
+            }
+
+            // Event Listeners
+            btnPenghasilan.addEventListener('click', function() {
+                toggleForm('penghasilan');
+                
+                anime({
+                    targets: this,
+                    scale: [1, 0.9, 1.1, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+                
+                hitungZakat();
+            });
+
+            btnEmas.addEventListener('click', function() {
+                toggleForm('emas');
+                
+                anime({
+                    targets: this,
+                    scale: [1, 0.9, 1.1, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+                
+                hitungZakat();
+            });
+
+            hitungBtn.addEventListener('click', function() {
+                hitungZakat();
+                
+                anime({
+                    targets: this,
+                    scale: [1, 0.95, 1.05, 1],
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+            });
+
+            // Input animations
+            [gaji, penghasilanLain, jumlahEmas, hargaEmas].forEach(input => {
+                input.addEventListener('input', function() {
+                    anime({
+                        targets: this.parentElement,
+                        scale: [1, 1.02, 1],
+                        duration: 200,
+                        easing: 'easeInOutQuad'
+                    });
+                });
+            });
+
+            // Keyboard shortcut (Enter)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    hitungBtn.click();
+                }
+            });
+
+            // Initial calculation
+            hitungZakat();
+        });
+    </script>
+</body>
+</html>
